@@ -1,0 +1,55 @@
+{% extends 'navigationbar.html' %}
+{% load static %}
+
+{% block body %}
+
+	<div class="container" style="margin-top: 50px;">
+		<h1 class="text-center">Add Appointment</h1>
+		<br><br>
+		<form method="POST">
+			{% csrf_token %}
+			<label>Doctor Name</label>
+			<select name="doctor" class="form-control" required>
+				
+				{% for i in doctor %}
+				<option value="{{i.name}}">{{i.name}} [{{i.id}}]</option>
+				{% endfor %}
+			</select>
+			<br>
+
+			<label>Patient Name</label>
+			<select name="patient" class="form-control" required>
+				
+				{% for i in patient %}
+				<option value="{{i.name}}">{{i.name}} [{{i.id}}]</option>
+				{% endfor %}
+			</select>
+			<br>
+
+			<label>Date</label>
+			<input type="date" name="date" class="form-control" required>
+
+			<label>Time</label>
+			<input type="time" name="time" class="form-control" required>
+			<br>
+			<input type="submit" value="Submit" class="form-control btn btn-primary">
+		</form>
+	</div>
+
+
+
+	{% ifequal error "no" %}
+		<script>
+			alert("record Saved Successfully");
+			window.location = ("{% url 'view_appointment' %}");
+		</script>
+	{% endifequal %} 
+
+	{% ifequal error "yes" %}
+		<script>
+			alert("Something went wrong, Try Again");
+		</script>
+	{% endifequal %}
+
+
+{% endblock body %}
